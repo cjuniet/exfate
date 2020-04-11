@@ -17,7 +17,7 @@ defmodule ExfateWeb.Router do
   scope "/", ExfateWeb do
     pipe_through :browser
 
-    live "/", DiceLive
+    live "/", PageLive
   end
 
   # Other scopes may use custom stacks.
