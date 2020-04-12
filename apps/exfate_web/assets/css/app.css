@@ -24,6 +24,7 @@
 body {
     background-color: var(--sbase03);
     color: var(--sbase0);
+    font-family: monospace;
 }
 label {
     color: var(--sbase1);
@@ -71,7 +72,7 @@ hr {
 .results {
     display: table;
 }
-.results > h1 {
+.results > h3 {
     color: var(--sbase3);
     font-weight: bold;
     font-style: italic;

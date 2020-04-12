@@ -5,36 +5,22 @@ defmodule ExfateWeb.PageLive do
     Phoenix.View.render(ExfateWeb.PageView, "index.html", assigns)
   end
 
-  def mount(%{"a" => a} = _params, _session, socket) do
+  def mount(params, _session, socket) do
     [br, bo, ca, cl, co, fa] =
-      case Integer.parse(a) do
+      case params |> Map.get("a", "0") |> Integer.parse() do
         {n, _} -> parse_approaches(n)
         :error -> [0, 0, 0, 0, 0, 0]
       end
 
-    {:ok,
-     assign(socket, %{
-       result: nil,
-       modifiers: 0,
-       brutal: br,
-       bold: bo,
-       cautious: ca,
-       clever: cl,
-       covert: co,
-       fast: fa
-     })}
-  end
-
-  def mount(_params, _session, socket) do
     values = %{
       result: nil,
       modifiers: 0,
-      brutal: 0,
-      bold: 0,
-      cautious: 0,
-      clever: 0,
-      covert: 0,
-      fast: 0
+      brutal: br,
+      bold: bo,
+      cautious: ca,
+      clever: cl,
+      covert: co,
+      fast: fa
     }
 
     {:ok, assign(socket, values)}
@@ -44,7 +30,13 @@ defmodule ExfateWeb.PageLive do
     approach = String.to_existing_atom(approach_name)
     approach_value = socket.assigns[approach]
     modifiers_value = socket.assigns[:modifiers]
-    result = Map.merge(%{approach: String.capitalize(approach_name)}, roll(approach_value, modifiers_value))
+
+    result =
+      Map.merge(
+        %{approach: String.capitalize(approach_name)},
+        roll(approach_value, modifiers_value)
+      )
+
     {:noreply, assign(socket, result: result, modifiers: 0)}
   end
 
