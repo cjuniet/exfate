@@ -23,14 +23,16 @@
     <div><input type="text" readonly name="fast" value="<%= @fast %>"></div>
     <div class="submit"><button phx-click="roll" phx-value-approach="fast">roll fast</div>
 
-    <div><label>modifiers</label></div>
+    <div><label><i>modifiers</i></label></div>
     <div><input type="text" readonly value="<%= @modifiers %>"></div>
     <div><button phx-click="mod-inc">+</button></div>
     <div><button phx-click="mod-dec">-</button></div>
+
+    <hr/>
 </div>
-<div>
-    <%= if @result do %>
-    <h1><b><i><%= @result.ladder %> <%= @result.approach %> approach!</i></b></h1>
+<%= if @result do %>
+<div class="results">
+    <h1><%= @result.ladder %> <%= @result.approach %> approach!</h1>
     <pre><%= @result.rolls %> = <%= @result.effort %></pre>
-    <% end %>
 </div>
+<% end %>

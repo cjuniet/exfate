@@ -1,6 +1,46 @@
 /* This file is for your main application css. */
 
+:root {
+  --sbase03:    #002b36;
+  --sbase02:    #073642;
+  --sbase01:    #586e75;
+  --sbase00:    #657b83;
+  --sbase0:     #839496;
+  --sbase1:     #93a1a1;
+  --sbase2:     #eee8d5;
+  --sbase3:     #fdf6e3;
+  --syellow:    #b58900;
+  --sorange:    #cb4b16;
+  --sred:       #dc322f;
+  --smagenta:   #d33682;
+  --sviolet:    #6c71c4;
+  --sblue:      #268bd2;
+  --scyan:      #2aa198;
+  --sgreen:     #859900;
+}
+
 @import "./phoenix.css";
+
+body {
+    background-color: var(--sbase03);
+    color: var(--sbase0);
+}
+label {
+    color: var(--sbase1);
+}
+input[type="text"] {
+    background-color: var(--sbase02);
+    color: var(--sbase1);
+    font-weight: bold;
+}
+button {
+    background-color: var(--sblue);
+    color: var(--sbase2);
+}
+button:hover {
+    background-color: var(--sbase00);
+    color: var(--sbase3);
+}
 
 .wrapper {
     display: grid;
@@ -21,4 +61,22 @@
 .wrapper > .submit {
     grid-column-start: 3;
     grid-column-end: 5;
+}
+hr {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    margin: 0 0 3rem 0;
+}
+
+.results {
+    display: table;
+}
+.results > h1 {
+    color: var(--sbase3);
+    font-weight: bold;
+    font-style: italic;
+}
+.results > pre {
+    background-color: var(--sbase0);
+    color: var(--sbase03);
 }
