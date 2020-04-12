@@ -23,7 +23,7 @@ defmodule Exfate.MixProject do
   def application do
     [
       mod: {Exfate.Application, []},
-      extra_applications: [:ssl, :logger, :runtime_tools]
+      extra_applications: [:inets, :ssl, :logger, :runtime_tools]
     ]
   end
 

@@ -13,6 +13,7 @@ defmodule ExfateWeb.PageLive do
       end
 
     values = %{
+      user: Map.get(params, "u", "someone"),
       result: nil,
       modifiers: 0,
       brutal: br,
@@ -37,6 +38,8 @@ defmodule ExfateWeb.PageLive do
         roll(approach_value, modifiers_value)
       )
 
+    send(self(), :send_to_discord)
+
     {:noreply, assign(socket, result: result, modifiers: 0)}
   end
 
@@ -46,6 +49,30 @@ defmodule ExfateWeb.PageLive do
 
   def handle_event("mod-dec", _, socket) do
     {:noreply, update(socket, :modifiers, &(&1 - 1))}
+  end
+
+  def handle_info(:send_to_discord, socket) do
+    r = socket.assigns.result
+    u = String.capitalize(socket.assigns.user)
+
+    webhook =
+      ("https://discordapp.comm/api/webhooks/" <>
+         Application.get_env(:exfate, :discord_token))
+      |> String.to_charlist()
+
+    payload =
+      "{\"content\": \"#{u}'s #{r.approach} approach is #{r.ladder}!" <>
+        " (#{if(r.effort >= 0, do: "+")}#{r.effort})\"}"
+
+    {:ok, {{_, 204, _}, _, _}} =
+      :httpc.request(
+        :post,
+        {webhook, [], 'application/json', payload},
+        [],
+        []
+      )
+
+    {:noreply, socket}
   end
 
   defp roll(approach, modifiers) do

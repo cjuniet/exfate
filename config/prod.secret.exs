@@ -30,6 +30,16 @@ config :exfate_web, ExfateWeb.Endpoint,
   ],
   secret_key_base: secret_key_base
 
+discord_token =
+  System.get_env("DISCORD_TOKEN") ||
+    raise """
+    environment variable DISCORD_TOKEN is missing.
+    For example: 1234567890/qwertyuiop-asdfghjkl-zxcvbnm
+    """
+
+config :exfate,
+  discord_token: discord_token
+
 # ## Using releases (Elixir v1.9+)
 #
 # If you are doing OTP releases, you need to instruct Phoenix
