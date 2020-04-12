@@ -5,7 +5,13 @@ defmodule Exfate.Umbrella.MixProject do
     [
       apps_path: "apps",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      releases: [
+        exfate: [
+          version: "0.1.0",
+          applications: [exfate: :permanent, exfate_web: :permanent]
+        ]
+      ]
     ]
   end
 

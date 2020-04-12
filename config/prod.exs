@@ -10,7 +10,7 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :exfate_web, ExfateWeb.Endpoint,
-  url: [host: "example.com", port: 80],
+  url: [host: "juniet.net", port: 443],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # ## SSL Support
