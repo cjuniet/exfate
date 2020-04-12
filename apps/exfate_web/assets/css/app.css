@@ -29,18 +29,34 @@ body {
 label {
     color: var(--sbase1);
 }
-input[type="text"] {
+input[type="text"], input[type="number"] {
     background-color: var(--sbase02);
     color: var(--sbase1);
     font-weight: bold;
 }
-button {
+button, input[type="submit"] {
     background-color: var(--sblue);
     color: var(--sbase2);
 }
-button:hover {
+button:hover, input[type="submit"]:hover {
     background-color: var(--sbase00);
     color: var(--sbase3);
+}
+
+.login {
+    display: table;
+}
+.login > div {
+    display: table-row;
+}
+.login > div > label, .login > div > input {
+    display: table-cell;
+}
+.login > div > label {
+    padding-right: 8px;
+}
+.login > div > input[type="number"] {
+    width: 4em;
 }
 
 .wrapper {
@@ -63,7 +79,7 @@ button:hover {
     grid-column-start: 3;
     grid-column-end: 5;
 }
-hr {
+.wrapper > hr {
     grid-column-start: 1;
     grid-column-end: 5;
     margin: 0 0 3rem 0;

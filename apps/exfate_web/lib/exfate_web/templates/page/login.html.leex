@@ -1,0 +1,32 @@
+<form class="login" phx-submit="login">
+    <div>
+        <label>Name</label>
+        <input type="text" required minlength="2" value="<%= @user %>" name="user">
+    </div>
+    <div>
+        <label>Brutal</label>
+        <input type="number" required min="0" max="3" value="<%= @brutal %>" name="brutal">
+    </div>
+    <div>
+        <label>Bold</label>
+        <input type="number" required min="0" max="3" value="<%= @bold %>" name="bold">
+    </div>
+    <div>
+        <label>Cautious</label>
+        <input type="number" required min="0" max="3" value="<%= @cautious %>" name="cautious">
+    </div>
+    <div>
+        <label>Clever</label>
+        <input type="number" required min="0" max="3" value="<%= @clever %>" name="clever">
+    </div>
+    <div>
+        <label>Covert</label>
+        <input type="number" required min="0" max="3" value="<%= @covert %>" name="covert">
+    </div>
+    <div>
+        <label>Fast</label>
+        <input type="number" required min="0" max="3" value="<%= @fast %>" name="fast">
+    </div>
+
+    <input type="submit" value="login">
+</form>

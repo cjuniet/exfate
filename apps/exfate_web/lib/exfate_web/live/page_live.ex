@@ -1,6 +1,10 @@
 defmodule ExfateWeb.PageLive do
   use Phoenix.LiveView
 
+  def render(%{user: nil} = assigns) do
+    Phoenix.View.render(ExfateWeb.PageView, "login.html", assigns)
+  end
+
   def render(assigns) do
     Phoenix.View.render(ExfateWeb.PageView, "index.html", assigns)
   end
@@ -12,19 +16,54 @@ defmodule ExfateWeb.PageLive do
         :error -> [0, 0, 0, 0, 0, 0]
       end
 
+    user =
+      if Map.has_key?(params, "a") && Map.has_key?(params, "u") do
+        Map.get(params, "u")
+      else
+        nil
+      end
+
     values = %{
-      user: Map.get(params, "u", "someone"),
-      result: nil,
-      modifiers: 0,
+      user: user,
       brutal: br,
       bold: bo,
       cautious: ca,
       clever: cl,
       covert: co,
-      fast: fa
+      fast: fa,
+      modifiers: 0,
+      result: nil
     }
 
     {:ok, assign(socket, values)}
+  end
+
+  def handle_event(
+        "login",
+        %{
+          "bold" => bo,
+          "brutal" => br,
+          "cautious" => ca,
+          "clever" => cl,
+          "covert" => co,
+          "fast" => fa,
+          "user" => user
+        },
+        socket
+      ) do
+    values = %{
+      user: user,
+      brutal: String.to_integer(br),
+      bold: String.to_integer(bo),
+      cautious: String.to_integer(ca),
+      clever: String.to_integer(cl),
+      covert: String.to_integer(co),
+      fast: String.to_integer(fa),
+      modifiers: 0,
+      result: nil
+    }
+
+    {:noreply, assign(socket, values)}
   end
 
   def handle_event("roll", %{"approach" => approach_name}, socket) do
@@ -53,10 +92,11 @@ defmodule ExfateWeb.PageLive do
 
   def handle_info(:send_to_discord, socket) do
     r = socket.assigns.result
-    u = String.capitalize(socket.assigns.user)
+
+    u = capitalize_name(socket.assigns.user)
 
     webhook =
-      ("https://discordapp.comm/api/webhooks/" <>
+      ("https://discordapp.com/api/webhooks/" <>
          Application.get_env(:exfate, :discord_token))
       |> String.to_charlist()
 
@@ -106,5 +146,23 @@ defmodule ExfateWeb.PageLive do
       -2 -> "Terrible"
       _ when n < -2 -> "below Terrible"
     end
+  end
+
+  defp capitalize_name(name) do
+    name |> capitalize_join(" ", "-")
+  end
+
+  defp capitalize_join(str, sep1, sep2) do
+    str
+    |> String.split(sep1)
+    |> Enum.map(&capitalize_join(&1, sep2))
+    |> Enum.join(sep1)
+  end
+
+  defp capitalize_join(str, sep1) do
+    str
+    |> String.split(sep1)
+    |> Enum.map(&String.capitalize(&1))
+    |> Enum.join(sep1)
   end
 end
