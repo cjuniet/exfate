@@ -144,7 +144,9 @@ defmodule ExfateWeb.PageLive do
       +0 -> "Mediocre"
       -1 -> "Poor"
       -2 -> "Terrible"
-      _ when n < -2 -> "below Terrible"
+      -3 -> "Catastrophic"
+      -4 -> "Horrifying"
+      _ when n < -4 -> "below Horrifying"
     end
   end
 
